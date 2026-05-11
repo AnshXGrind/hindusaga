@@ -23,32 +23,47 @@ export default function Terrain() {
       const x = pos.getX(i);
       const z = pos.getZ(i);
 
-      // Multi-layered noise for rugged mountains
-      let y = noise2D(x * 0.02, z * 0.02) * 15;
-      y += noise2D(x * 0.05, z * 0.05) * 5;
-      y += noise2D(x * 0.1, z * 0.1) * 2;
+      // Advanced Ridged multifractal style noise for sharper peaks
+      let n = 0;
+      let amplitude = 1;
+      let frequency = 0.02;
+      for (let o = 0; o < 5; o++) {
+        let v = noise2D(x * frequency, z * frequency);
+        v = 1.0 - Math.abs(v); // Ridge formation
+        v = v * v; // Sharpen ridges
+        n += v * amplitude;
+        amplitude *= 0.5;
+        frequency *= 2.0;
+      }
       
+      let y = n * 18 - 8;
+
       // Make center more mountainous (Himalayas)
       const distToCenter = Math.sqrt(x * x + z * z);
-      const mntMask = Math.max(0, 1 - distToCenter / (size * 0.6));
-      y *= (1 + mntMask * 2.5);
+      const mntMask = Math.max(0, 1 - distToCenter / (size * 0.8));
+      y *= (1 + mntMask * 3.0);
 
-      if (y < -2) y = -2; // River beds
+      // Deepen valleys for rivers
+      if (y < -4) y = -4 - Math.abs(y + 4) * 0.2;
 
       pos.setY(i, y);
 
-      // Cinematic dark terrain base
-      if (y > 20) {
-        // Snow caps
-        color.set('#ffffff');
-      } else if (y > 8) {
-        // Rocky high mountains
-        color.set('#1a202c');
-      } else if (y > 0) {
-        // Lower slopes dark moss/rocks
+      // Cinematic terrain base colors based on height and slope
+      // A quick pseudo-slope check using surrounding noise wasn't done for performance, relying on height
+      if (y > 25) {
+        // Deep snow
+        color.set('#f8f9fa');
+      } else if (y > 15) {
+        // Icy rock
+        color.set('#94a3b8');
+      } else if (y > 5) {
+        // Dark highland rock
+        color.set('#1e293b');
+      } else if (y > -2) {
+        // Mossy/dirt slopes
         color.set('#0f172a');
       } else {
-        // River beds
+        // River beds and deep glacial valleys
         color.set('#020617');
       }
       
@@ -60,7 +75,7 @@ export default function Terrain() {
     geo.computeVertexNormals();
     geo.setAttribute('color', new THREE.BufferAttribute(colorsArray, 3));
 
-    return { geometry: geo, colors: colorsArray };
+    return { geometry: geo };
   }, [size, segments]);
 
   return (
