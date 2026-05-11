@@ -9,47 +9,55 @@ export function Effects() {
 
   // Snowfall particles
   const particleCount = 2000;
-  const particles = useMemo(() => {
-    /* eslint-disable react-hooks/purity */
-    const positions = new Float32Array(particleCount * 3);
+  
+  // Create positions array once outside
+  const { geometry } = useMemo(() => {
+    const pos = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 100;
-      positions[i * 3 + 1] = Math.random() * 50;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 100;
+        // pseudo random based on index wrapper to satisfy strict purity
+      const pseudoRandom = () => {
+         const x = Math.sin(i * 12.9898) * 43758.5453;
+         return x - Math.floor(x);
+      };
+      const pseudoRandom2 = () => {
+         const x = Math.sin(i * 78.233) * 43758.5453;
+         return x - Math.floor(x);
+      };
+      const pseudoRandom3 = () => {
+         const x = Math.cos(i * 4.898) * 43758.5453;
+         return x - Math.floor(x);
+      };
+      
+      pos[i * 3] = (pseudoRandom() - 0.5) * 100;
+      pos[i * 3 + 1] = pseudoRandom2() * 50;
+      pos[i * 3 + 2] = (pseudoRandom3() - 0.5) * 100;
     }
-    return positions;
-    /* eslint-enable react-hooks/purity */
-  }, []);
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    return { geometry: geo };
+  }, [particleCount]);
 
   useFrame((state, delta) => {
     if (particlesRef.current) {
-      const positions = particlesRef.current.geometry.attributes.position.array as Float32Array;
+      const posAttr = particlesRef.current.geometry.attributes.position;
+      const posArray = posAttr.array as Float32Array;
       for (let i = 0; i < particleCount; i++) {
         // Fall down
-        positions[i * 3 + 1] -= delta * 5;
+        posArray[i * 3 + 1] -= delta * 5;
         // Small wind drift
-        positions[i * 3] += Math.sin(state.clock.elapsedTime + i) * delta;
+        posArray[i * 3] += Math.sin(state.clock.elapsedTime + i) * delta;
         
         // Reset if below mountain base
-        if (positions[i * 3 + 1] < 0) {
-          positions[i * 3 + 1] = 50;
+        if (posArray[i * 3 + 1] < 0) {
+          posArray[i * 3 + 1] = 50;
         }
       }
-      particlesRef.current.geometry.attributes.position.needsUpdate = true;
+      posAttr.needsUpdate = true;
     }
   });
 
   return (
-    <points ref={particlesRef}>
-      <bufferGeometry>
-        <bufferAttribute 
-          attach="attributes-position" 
-          count={particleCount} 
-          array={particles} 
-          itemSize={3} 
-          args={[particles, 3]}
-        />
-      </bufferGeometry>
+    <points ref={particlesRef} geometry={geometry}>
       <pointsMaterial 
         size={0.15} 
         color="#ffffff" 
