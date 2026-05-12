@@ -2,6 +2,7 @@
 
 import { Canvas } from '@react-three/fiber';
 import { Environment, Stars } from '@react-three/drei';
+import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import { Suspense } from 'react';
 import Terrain from './Terrain';
 import CameraController from './CameraController';
@@ -13,8 +14,8 @@ export default function CinematicScene() {
     <div className="fixed inset-0 w-screen h-screen bg-black z-0">
       <Canvas
         camera={{ position: [0, 50, 100], fov: 45 }}
-        gl={{ antialias: true, alpha: false }}
-        dpr={[1, 2]}
+        gl={{ antialias: false, alpha: false, powerPreference: "high-performance" }} // Antialias false is better for postprocessing
+        dpr={[1, 1.5]} // Cap dpr for performance with postprocessing
       >
         <color attach="background" args={['#02040a']} />
         <fog attach="fog" args={['#02040a', 20, 250]} />
@@ -36,6 +37,11 @@ export default function CinematicScene() {
           
           <Effects />
           <CameraController />
+          
+          <EffectComposer disableNormalPass multisampling={4}>
+            <Bloom luminanceThreshold={0.5} mipmapBlur intensity={1.5} />
+            <Vignette eskil={false} offset={0.1} darkness={1.1} />
+          </EffectComposer>
         </Suspense>
       </Canvas>
     </div>

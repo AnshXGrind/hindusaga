@@ -125,11 +125,11 @@ export function SacredRivers() {
     if (alaknandaMat.current) alaknandaMat.current.uniforms.uTime.value = state.clock.elapsedTime;
     if (gangaMat.current) gangaMat.current.uniforms.uTime.value = state.clock.elapsedTime;
     
-    // Fade in rivers based on scroll
-    const introFade = Math.min(1, scrollProgress * 2);
-    if (bhagirathiMat.current) bhagirathiMat.current.uniforms.uOpacity.value = introFade * 0.8;
-    if (alaknandaMat.current) alaknandaMat.current.uniforms.uOpacity.value = introFade * 0.8;
-    if (gangaMat.current) gangaMat.current.uniforms.uOpacity.value = introFade * 1.0;
+    // Rivers should always be visible, but glow brighter slightly as you scroll
+    const intensity = 0.5 + Math.min(0.5, scrollProgress * 1.5);
+    if (bhagirathiMat.current) bhagirathiMat.current.uniforms.uOpacity.value = intensity * 0.9;
+    if (alaknandaMat.current) alaknandaMat.current.uniforms.uOpacity.value = intensity * 0.9;
+    if (gangaMat.current) gangaMat.current.uniforms.uOpacity.value = intensity * 1.0;
   });
 
   return (

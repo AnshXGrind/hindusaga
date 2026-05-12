@@ -12,6 +12,7 @@
     "@monogrid/gainmap-js": "^3.4.0",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
+    "@react-three/postprocessing": "^3.0.4",
     "@types/mapbox-gl": "^3.4.1",
     "@types/three": "^0.184.1",
     "framer-motion": "^12.38.0",
