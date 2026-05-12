@@ -37,45 +37,45 @@ export default function HTMLOverlay() {
         </motion.div>
 
         {/* Origins Section */}
-        <motion.div style={{ opacity: opacityOrigins }} className="absolute flex flex-col items-start translate-x-[-10vw] md:translate-x-[-20vw] px-4">
-          <h2 className="font-serif text-4xl md:text-6xl text-white drop-shadow-lg">
+        <motion.div style={{ opacity: opacityOrigins }} className="absolute flex flex-col items-start translate-x-[-10vw] md:translate-x-[-20vw] px-4 w-full max-w-3xl">
+          <h2 className="font-serif text-4xl md:text-6xl text-white drop-shadow-lg leading-tight">
             Origins of the Divine
           </h2>
-          <h3 className="text-sacred-gold text-2xl font-serif mt-2">Gangotri & Yamunotri</h3>
-          <p className="mt-6 text-md md:text-lg font-light max-w-lg text-gray-300 leading-relaxed border-l border-glacier/30 pl-4">
+          <h3 className="text-sacred-gold text-2xl md:text-3xl font-serif mt-4 mb-2">Gangotri & Yamunotri</h3>
+          <p className="mt-4 text-md md:text-lg font-light text-gray-300 leading-loose border-l-2 border-glacier/30 pl-6 bg-black/20 p-4 rounded-r-xl backdrop-blur-sm">
             High above in the glacial peaks, the Bhagirathi and Yamuna begin their arduous descent. Legend says the Ganges was brought down from the heavens to absolve the sins of mankind.
           </p>
         </motion.div>
 
         {/* Path of Shiva */}
-        <motion.div style={{ opacity: opacityKedarnath }} className="absolute flex flex-col items-end translate-x-[10vw] md:translate-x-[20vw] px-4 text-right">
-          <h2 className="font-serif text-4xl md:text-6xl text-white drop-shadow-lg">
+        <motion.div style={{ opacity: opacityKedarnath }} className="absolute flex flex-col items-end translate-x-[10vw] md:translate-x-[20vw] px-4 text-right w-full max-w-3xl">
+          <h2 className="font-serif text-4xl md:text-6xl text-white drop-shadow-lg leading-tight">
             Path of the Ascetics
           </h2>
-          <h3 className="text-sacred-gold text-2xl font-serif mt-2">Kedarnath to Badrinath</h3>
-          <p className="mt-6 text-md md:text-lg font-light max-w-lg text-gray-300 leading-relaxed border-r border-glacier/30 pr-4">
+          <h3 className="text-sacred-gold text-2xl md:text-3xl font-serif mt-4 mb-2">Kedarnath to Badrinath</h3>
+          <p className="mt-4 text-md md:text-lg font-light text-gray-300 leading-loose border-r-2 border-glacier/30 pr-6 bg-black/20 p-4 rounded-l-xl backdrop-blur-sm">
             The mythical underground Saraswati glows near Mana village, meeting the Alaknanda. Here, silent sages traverse the ancient mountains, a route steeped in primordial mystery.
           </p>
         </motion.div>
 
         {/* Ethereal Beauty */}
-        <motion.div style={{ opacity: opacityValley }} className="absolute flex flex-col items-center text-center px-4">
-          <h2 className="font-serif text-4xl md:text-6xl text-white drop-shadow-lg">
+        <motion.div style={{ opacity: opacityValley }} className="absolute flex flex-col items-center text-center px-4 w-full max-w-3xl">
+          <h2 className="font-serif text-4xl md:text-6xl text-white drop-shadow-lg leading-tight">
             Ethereal Blooms
           </h2>
-          <h3 className="text-sacred-gold text-2xl font-serif mt-2">Valley of Flowers & Hemkund Sahib</h3>
-          <p className="mt-6 text-md md:text-lg font-light max-w-lg text-gray-300 leading-relaxed">
+          <h3 className="text-sacred-gold text-2xl md:text-3xl font-serif mt-4 mb-2">Valley of Flowers & Hemkund Sahib</h3>
+          <p className="mt-4 text-md md:text-lg font-light text-gray-300 leading-loose bg-black/20 p-6 rounded-xl backdrop-blur-sm">
             By the high glacial lakes, the austere landscape gives way to a vibrant burst of life, a serene pause in the violent geological theater of the Himalayas.
           </p>
         </motion.div>
 
         {/* The Confluences */}
-        <motion.div style={{ opacity: opacityPrayags }} className="absolute flex flex-col items-start translate-x-[-10vw] px-4">
-          <h2 className="font-serif text-4xl md:text-6xl text-white drop-shadow-lg">
-            The Devine Mergers
+        <motion.div style={{ opacity: opacityPrayags }} className="absolute flex flex-col items-start translate-x-[-10vw] px-4 w-full max-w-4xl">
+          <h2 className="font-serif text-4xl md:text-6xl text-white drop-shadow-lg leading-tight">
+            The Divine Mergers
           </h2>
-          <h3 className="text-sacred-gold text-2xl font-serif mt-2">Panch Prayag</h3>
-          <ul className="mt-6 text-md md:text-lg font-light text-gray-300 space-y-4 border-l border-glacier/30 pl-4">
+          <h3 className="text-sacred-gold text-2xl md:text-3xl font-serif mt-4 mb-2">Panch Prayag</h3>
+          <ul className="mt-4 text-md md:text-lg font-light text-gray-300 space-y-4 border-l-2 border-glacier/30 pl-6 bg-black/20 p-6 rounded-r-xl backdrop-blur-sm">
             <li><span className="font-semibold text-white"> विष्णुप्रयाग </span> (Vishnuprayag) - Alaknanda meets Dhauliganga</li>
             <li><span className="font-semibold text-white"> नन्दप्रयाग </span> (Nandaprayag) - Alaknanda meets Nandakini</li>
             <li><span className="font-semibold text-white"> कर्णप्रयाग </span> (Karnaprayag) - Alaknanda meets Pindar</li>
@@ -85,14 +85,14 @@ export default function HTMLOverlay() {
         </motion.div>
 
         {/* The Birth of Ganga */}
-        <motion.div style={{ opacity: opacityOutro }} className="absolute flex flex-col items-center text-center px-4">
-          <h2 className="font-serif text-5xl md:text-7xl text-white drop-shadow-lg">
+        <motion.div style={{ opacity: opacityOutro }} className="absolute flex flex-col items-center text-center px-4 w-full max-w-4xl">
+          <h2 className="font-serif text-5xl md:text-7xl text-white drop-shadow-lg leading-tight">
             Maa Ganga
           </h2>
-          <h3 className="text-sacred-gold text-2xl md:text-3xl font-serif mt-4 tracking-widest">
+          <h3 className="text-sacred-gold text-2xl md:text-3xl font-serif mt-4 mb-2 tracking-widest">
             THE ETERNAL FLOW
           </h3>
-          <p className="mt-8 text-md md:text-lg font-light max-w-2xl text-gray-300 leading-relaxed">
+          <p className="mt-4 text-md md:text-lg font-light text-gray-300 leading-loose bg-black/20 p-6 rounded-xl backdrop-blur-sm">
             At Devprayag, the fierce Bhagirathi and the calm Alaknanda dissolve their identities. From this sacred union, the Ganga is truly born, descending into the plains to nourish a civilization.
           </p>
           <div className="mt-12 w-px h-24 bg-gradient-to-b from-glacier to-transparent"></div>

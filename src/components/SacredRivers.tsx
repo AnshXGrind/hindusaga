@@ -23,21 +23,27 @@ const riverFragmentShader = `
   varying vec2 vUv;
   varying vec3 vPosition;
   
-  // Sine noise function
+  // Fluid noise function for realistic water
   float noise(vec2 p) {
-    return sin(p.x * 10.0 + uTime * uFlowSpeed) * sin(p.y * 10.0 + uTime * uFlowSpeed);
+    float f = 0.0;
+    f += 0.5000 * sin(p.x * 10.0 + uTime * uFlowSpeed) * sin(p.y * 10.0 + uTime * uFlowSpeed);
+    f += 0.2500 * sin(p.x * 20.0 - uTime * uFlowSpeed * 1.5) * sin(p.y * 20.0 + uTime * uFlowSpeed * 1.2);
+    f += 0.1250 * sin(p.x * 40.0 + uTime * uFlowSpeed * 2.0) * sin(p.y * 40.0 - uTime * uFlowSpeed * 1.8);
+    return f * 0.5 + 0.5; // Normalize to 0-1 range
   }
 
   void main() {
-    // Flowing effect
+    // Flowing effect with slight lateral sway
     vec2 flowUv = vUv;
     flowUv.x -= uTime * uFlowSpeed;
+    flowUv.y += sin(uTime * 0.2) * 0.1;
     
-    float n = noise(flowUv * 5.0) * 0.5 + 0.5;
-    float edgeMist = smoothstep(0.0, 0.2, vUv.y) * smoothstep(1.0, 0.8, vUv.y);
+    float n = noise(flowUv * 3.0);
+    float edgeMist = smoothstep(0.0, 0.3, vUv.y) * smoothstep(1.0, 0.7, vUv.y);
     
-    vec3 finalColor = mix(uColor * 0.5, uColor * 1.5, n);
-    float alpha = uOpacity * edgeMist * (0.5 + n * 0.5);
+    // Create a dynamic, shimmering water effect
+    vec3 finalColor = mix(uColor * 0.6, uColor * 1.8, n);
+    float alpha = uOpacity * edgeMist * (0.4 + n * 0.6);
     
     gl_FragColor = vec4(finalColor, alpha);
   }
@@ -129,21 +135,21 @@ export function SacredRivers() {
   return (
     <group>
       <mesh>
-        <tubeGeometry args={[curves.bhagirathi, 100, 0.5, 12, false]} />
+        <tubeGeometry args={[curves.bhagirathi, 300, 0.5, 32, false]} />
         <shaderMaterial ref={bhagirathiMat} vertexShader={riverVertexShader} fragmentShader={riverFragmentShader} uniforms={uniformsBhagi} transparent depthWrite={false} blending={THREE.AdditiveBlending} />
       </mesh>
       <mesh>
-        <tubeGeometry args={[curves.alaknanda, 100, 0.6, 12, false]} />
+        <tubeGeometry args={[curves.alaknanda, 300, 0.6, 32, false]} />
         <shaderMaterial ref={alaknandaMat} vertexShader={riverVertexShader} fragmentShader={riverFragmentShader} uniforms={uniformsAlak} transparent depthWrite={false} blending={THREE.AdditiveBlending} />
       </mesh>
       <mesh>
-        <tubeGeometry args={[curves.ganga, 150, 1.2, 16, false]} />
+        <tubeGeometry args={[curves.ganga, 450, 1.2, 48, false]} />
         <shaderMaterial ref={gangaMat} vertexShader={riverVertexShader} fragmentShader={riverFragmentShader} uniforms={uniformsGanga} transparent depthWrite={false} blending={THREE.AdditiveBlending} />
       </mesh>
       
       {/* Saraswati - magical golden underground path */}
       <mesh>
-        <tubeGeometry args={[curves.saraswati, 64, 0.3, 8, false]} />
+        <tubeGeometry args={[curves.saraswati, 150, 0.3, 16, false]} />
         <meshBasicMaterial color="#FFD700" transparent opacity={0.4} wireframe />
       </mesh>
 
